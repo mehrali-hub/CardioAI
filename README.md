@@ -126,7 +126,7 @@ This is an educational and portfolio project, **not a certified medical device**
 
 ## Author
 
-**Mehr** — BS Computer Science (FAST NUCES Peshawar), Machine Learning & Data Science.
+**Mehr** — BS Computer Science (FAST NUCES ), Machine Learning Engieer & Data Science in progress.
 
 ## License
 
