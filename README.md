@@ -6,7 +6,6 @@
 ![SHAP](https://img.shields.io/badge/SHAP-Explainable_AI-purple?style=flat-square)
 ![Gemini](https://img.shields.io/badge/Gemini-AI_Chat-blue?style=flat-square&logo=google)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
-![CI](https://github.com/Astreonix/CardioAI/actions/workflows/ci.yml/badge.svg)
 ![Deploy](https://img.shields.io/badge/Deploy-Render-46E3B7?style=flat-square&logo=render)
 
 An end-to-end AI-powered heart disease risk prediction platform built with Flask, scikit-learn, SHAP explainability, Gemini AI chat, SQLAlchemy, and ReportLab PDF generation.
