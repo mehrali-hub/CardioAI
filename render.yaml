@@ -1,0 +1,25 @@
+# ── CardioAI Render.com Deployment Config ────────────────
+# Documentation: https://render.com/docs/render-yaml-reference
+
+services:
+  - type: web
+    name: cardioai
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free                        # free tier — upgrade for production
+    region: oregon                    # us-west-2
+
+    # Environment variables (set secret values in Render dashboard)
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: FLASK_SECRET_KEY
+        generateValue: true           # Render auto-generates a secure key
+      - key: GEMINI_API_KEY
+        sync: false                   # Set manually in Render dashboard
+
+    # Health check
+    healthCheckPath: /
+
+    # Auto-deploy on push to main branch
+    autoDeploy: true

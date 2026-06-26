@@ -1,0 +1,18 @@
+# CardioAI .dockerignore
+__pycache__/
+*.py[cod]
+*.pyo
+.env
+*.db
+*.sqlite3
+.git/
+.gitignore
+.DS_Store
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.coverage
+htmlcov/
+node_modules/
+*.log

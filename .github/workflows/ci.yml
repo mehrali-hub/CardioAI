@@ -1,0 +1,65 @@
+name: CardioAI CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Cache pip dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Verify model artifacts load
+      run: |
+        python -c "
+        import pickle, numpy as np
+        with open('models/cardioai_model.pkl','rb') as f: m=pickle.load(f)
+        with open('models/scaler.pkl','rb') as f: s=pickle.load(f)
+        with open('models/feature_columns.pkl','rb') as f: fc=pickle.load(f)
+        with open('models/shap_explainer.pkl','rb') as f: e=pickle.load(f)
+        print('✅ All model artifacts loaded successfully')
+        print(f'✅ Features: {len(fc)}, Model: {type(m).__name__}')
+        "
+
+    - name: Test Flask app starts
+      run: |
+        python -c "
+        import os
+        os.environ['FLASK_ENV'] = 'testing'
+        from app import app, db
+        with app.app_context():
+            db.create_all()
+        print('✅ Flask app and database initialized successfully')
+        "
+
+    - name: Verify all templates exist
+      run: |
+        python -c "
+        import os
+        templates = ['index.html','predict.html','history.html','chat.html','404.html']
+        for t in templates:
+            path = f'templates/{t}'
+            assert os.path.exists(path), f'Missing: {path}'
+            print(f'✅ {path}')
+        "
